@@ -11,12 +11,15 @@ target_include_directories(
 	$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
+message(STATUS "Hi 1")
+
 add_library(eventpp::eventpp ALIAS eventpp)
 
 # Checks if eventpp is the main project or if it is
 # being built as a subproject (using add_subdirectory/FetchContent).
 set(MAIN_PROJECT OFF)
 if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+message(STATUS "Hi 2")
     set(MAIN_PROJECT ON)
 endif()
 
@@ -29,7 +32,13 @@ endif (POLICY CMP0077)
 
 option(EVENTPP_INSTALL "Enable installation" ${MAIN_PROJECT})
 
+message(STATUS "Hi 5")
+
+# ASM: Set hardcoded
+set(EVENTPP_INSTALL ON)
+
 if (EVENTPP_INSTALL)
+	message(STATUS "Hi 6")
 	# Install the library
 	install(
 		TARGETS eventpp
@@ -50,7 +59,7 @@ if (EVENTPP_INSTALL)
 		NAMESPACE eventpp::
 		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/eventpp
 	)
-
+message(STATUS "Hi 7")
 	# Generate the package version file
 	include(CMakePackageConfigHelpers)
 	write_basic_package_version_file(

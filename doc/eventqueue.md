@@ -83,10 +83,10 @@ Note: the queued events are not copied, moved, assigned, or move assigned, only 
 
 ```c++
 template <typename ...A>
-void enqueue(A && ...args);
+void enqueue(A ...args);
 
 template <typename T, typename ...A>
-void enqueue(T && first, A && ...args);
+void enqueue(T && first, A ...args);
 ```  
 Put an event into the event queue. The event type is deducted from the arguments of `enqueue`.  
 All copyable arguments are copied to internal data structure. All non-copyable but movable arguments are moved.  
@@ -97,8 +97,6 @@ If an argument is a pointer, only the pointer will be stored. The object it poin
 The time complexity is O(1).  
 
 The two overloaded functions have similar but slightly difference. How to use them depends on the `ArgumentPassingMode` policy. Please reference the [document of policies](policies.md) for more information.
-
-Note: the arguments life time may be longer than expected. `EventQueue` copies the arguments into internal data structure, after the event is dispatched, the data is cached for next usage, so the arguments won't be destroyed until the data is reused. This is for performance optimization. This is usually not an issue, but if you pass large data in shared pointer, the data may be in the memory for longer time than necessary.
 
 #### process
 
